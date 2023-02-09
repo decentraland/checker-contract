@@ -16,9 +16,6 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
-    polygon: {
-      url: "https://rpc.decentraland.org/polygon",
-    },
     mainnet: {
       url: "https://rpc.decentraland.org/mainnet",
     },

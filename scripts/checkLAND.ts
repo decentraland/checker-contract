@@ -24,7 +24,7 @@ const suites = [
     params: {
       sender: "0xa31f1f0d6bbd919bb3adab8da5835ed13e21f32a",
       x: -17,
-      y: 37,
+      y: -37,
     },
     block: 16578039,
     expected: true,
@@ -33,7 +33,7 @@ const suites = [
     params: {
       sender: "0xa31f1f0d6bbd919bb3adab8da5835ed13e21f32a",
       x: -17,
-      y: 37,
+      y: -37,
     },
     block: 16578015,
     expected: true,

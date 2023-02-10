@@ -1,60 +1,102 @@
 /**
  *Submitted for verification at polygonscan.com on 2023-01-03
-*/
+ */
 
 /**
  *Submitted for verification at Etherscan.io on 2022-11-28
-*/
+ */
 
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.16;
 
 interface ICollection {
-    function isCollectionFromFactory(address _collection) external view returns (bool);
-    function items(uint256 _itemId) external view returns (string memory, uint256, uint256, uint256, address, string memory, string memory);
+    function isCollectionFromFactory(
+        address _collection
+    ) external view returns (bool);
+
+    function items(
+        uint256 _itemId
+    )
+        external
+        view
+        returns (
+            string memory,
+            uint256,
+            uint256,
+            uint256,
+            address,
+            string memory,
+            string memory
+        );
+
     function creator() external view returns (address);
+
     function globalManagers(address _user) external view returns (bool);
-    function itemManagers(uint256 _itemId, address _user) external view returns (bool);
+
+    function itemManagers(
+        uint256 _itemId,
+        address _user
+    ) external view returns (bool);
 }
 
 interface ITPRegistry {
-    function isThirdPartyManager(string memory _thirdPartyId, address _manager) external view returns (bool);
-    function thirdParties(string memory _tpID) external view returns (
-        bool,
-        bytes32,
-        uint256,
-        uint256,
-        uint256,
-        string memory,
-        string memory
-    );
-}  
+    function isThirdPartyManager(
+        string memory _thirdPartyId,
+        address _manager
+    ) external view returns (bool);
+
+    function thirdParties(
+        string memory _tpID
+    )
+        external
+        view
+        returns (
+            bool,
+            bytes32,
+            uint256,
+            uint256,
+            uint256,
+            string memory,
+            string memory
+        );
+}
 
 interface INFT {
-    function isApprovedForAll(address _user, address _operator) external view returns (bool);
+    function isApprovedForAll(
+        address _user,
+        address _operator
+    ) external view returns (bool);
+
     function getApproved(uint256 _nft) external view returns (address);
+
     function updateOperator(uint256 _nft) external view returns (address);
-    function updateManager(address _user, address _operator) external view returns (bool);
+
+    function updateManager(
+        address _user,
+        address _operator
+    ) external view returns (bool);
 
     function ownerOf(uint256 _nft) external view returns (address);
 
     function encodeTokenId(int x, int y) external view returns (uint256);
-    function getLandEstateId(uint256 nft) external view returns (uint256);
 
-}  
+    function getLandEstateId(uint256 nft) external view returns (uint256);
+}
 
 interface ICommittee {
     function members(address _user) external view returns (bool);
 }
 
 interface IDCLRegistrar {
-     /**
+    /**
      * @dev Get the owner of a subdomain
      * @param _subdomain - string of the subdomain
      * @return owner of the subdomain
      */
-    function getOwnerOf(string memory _subdomain) external view returns (address);
+    function getOwnerOf(
+        string memory _subdomain
+    ) external view returns (address);
 }
 
 // OpenZeppelin Contracts (last updated v4.8.0) (utils/Address.sol)
@@ -118,10 +160,16 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address: insufficient balance");
+        require(
+            address(this).balance >= amount,
+            "Address: insufficient balance"
+        );
 
         (bool success, ) = recipient.call{value: amount}("");
-        require(success, "Address: unable to send value, recipient may have reverted");
+        require(
+            success,
+            "Address: unable to send value, recipient may have reverted"
+        );
     }
 
     /**
@@ -142,8 +190,17 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
-        return functionCallWithValue(target, data, 0, "Address: low-level call failed");
+    function functionCall(
+        address target,
+        bytes memory data
+    ) internal returns (bytes memory) {
+        return
+            functionCallWithValue(
+                target,
+                data,
+                0,
+                "Address: low-level call failed"
+            );
     }
 
     /**
@@ -171,8 +228,18 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCallWithValue(address target, bytes memory data, uint256 value) internal returns (bytes memory) {
-        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+    function functionCallWithValue(
+        address target,
+        bytes memory data,
+        uint256 value
+    ) internal returns (bytes memory) {
+        return
+            functionCallWithValue(
+                target,
+                data,
+                value,
+                "Address: low-level call with value failed"
+            );
     }
 
     /**
@@ -187,9 +254,20 @@ library Address {
         uint256 value,
         string memory errorMessage
     ) internal returns (bytes memory) {
-        require(address(this).balance >= value, "Address: insufficient balance for call");
-        (bool success, bytes memory returndata) = target.call{value: value}(data);
-        return verifyCallResultFromTarget(target, success, returndata, errorMessage);
+        require(
+            address(this).balance >= value,
+            "Address: insufficient balance for call"
+        );
+        (bool success, bytes memory returndata) = target.call{value: value}(
+            data
+        );
+        return
+            verifyCallResultFromTarget(
+                target,
+                success,
+                returndata,
+                errorMessage
+            );
     }
 
     /**
@@ -198,8 +276,16 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
-        return functionStaticCall(target, data, "Address: low-level static call failed");
+    function functionStaticCall(
+        address target,
+        bytes memory data
+    ) internal view returns (bytes memory) {
+        return
+            functionStaticCall(
+                target,
+                data,
+                "Address: low-level static call failed"
+            );
     }
 
     /**
@@ -214,7 +300,13 @@ library Address {
         string memory errorMessage
     ) internal view returns (bytes memory) {
         (bool success, bytes memory returndata) = target.staticcall(data);
-        return verifyCallResultFromTarget(target, success, returndata, errorMessage);
+        return
+            verifyCallResultFromTarget(
+                target,
+                success,
+                returndata,
+                errorMessage
+            );
     }
 
     /**
@@ -223,8 +315,16 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
-        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    function functionDelegateCall(
+        address target,
+        bytes memory data
+    ) internal returns (bytes memory) {
+        return
+            functionDelegateCall(
+                target,
+                data,
+                "Address: low-level delegate call failed"
+            );
     }
 
     /**
@@ -239,7 +339,13 @@ library Address {
         string memory errorMessage
     ) internal returns (bytes memory) {
         (bool success, bytes memory returndata) = target.delegatecall(data);
-        return verifyCallResultFromTarget(target, success, returndata, errorMessage);
+        return
+            verifyCallResultFromTarget(
+                target,
+                success,
+                returndata,
+                errorMessage
+            );
     }
 
     /**
@@ -284,7 +390,10 @@ library Address {
         }
     }
 
-    function _revert(bytes memory returndata, string memory errorMessage) private pure {
+    function _revert(
+        bytes memory returndata,
+        string memory errorMessage
+    ) private pure {
         // Look for revert reason and bubble it up if present
         if (returndata.length > 0) {
             // The easiest way to bubble the revert reason is using memory via assembly
@@ -311,18 +420,32 @@ contract Checker {
         bool hasAccess = false;
         uint256 i = 0;
 
-        while(!hasAccess && i < _factories.length) {
+        while (!hasAccess && i < _factories.length) {
             ICollection factory = _factories[i];
             i++;
 
-            hasAccess = _validateWearables(factory, _collection, _sender, _itemId, _contentHash, _committees);
+            hasAccess = _validateWearables(
+                factory,
+                _collection,
+                _sender,
+                _itemId,
+                _contentHash,
+                _committees
+            );
         }
 
         return hasAccess;
     }
 
-    function _validateWearables(ICollection _factory, ICollection _collection, address _sender, uint256 _itemId, string calldata _contentHash, ICommittee[] calldata _committees) private view returns (bool) {
-        if(!_factory.isCollectionFromFactory(address(_collection))) {
+    function _validateWearables(
+        ICollection _factory,
+        ICollection _collection,
+        address _sender,
+        uint256 _itemId,
+        string calldata _contentHash,
+        ICommittee[] calldata _committees
+    ) private view returns (bool) {
+        if (!_factory.isCollectionFromFactory(address(_collection))) {
             return false;
         }
 
@@ -338,7 +461,7 @@ contract Checker {
         }
 
         if (
-            creator != _sender && 
+            creator != _sender &&
             !_collection.globalManagers(_sender) &&
             !_collection.itemManagers(_itemId, _sender) &&
             !isCommitteeMember
@@ -346,14 +469,14 @@ contract Checker {
             return false;
         }
 
-        (,,,,,,string memory contentHash) = _collection.items(_itemId);
+        (, , , , , , string memory contentHash) = _collection.items(_itemId);
 
         return keccak256(bytes(_contentHash)) == keccak256(bytes(contentHash));
     }
 
     function validateThirdParty(
         address _sender,
-        ITPRegistry _tpRegistry, 
+        ITPRegistry _tpRegistry,
         string memory _tpId,
         bytes32 _root
     ) external view returns (bool) {
@@ -361,70 +484,88 @@ contract Checker {
             return false;
         }
 
-        (bool isApproved, bytes32 root,,,,,) = _tpRegistry.thirdParties(_tpId);
+        (bool isApproved, bytes32 root, , , , , ) = _tpRegistry.thirdParties(
+            _tpId
+        );
 
         return isApproved && root == _root;
     }
 
-    function checkName(address _sender, IDCLRegistrar _registrar, string calldata _name) external view returns (bool) {
+    function checkName(
+        address _sender,
+        IDCLRegistrar _registrar,
+        string calldata _name
+    ) external view returns (bool) {
         return _sender == _registrar.getOwnerOf(_name);
     }
 
-    function checkLAND(address _sender, INFT _land, INFT _estate, int256 _x, int256 _y) external view returns (bool) {
+    function checkLAND(
+        address _sender,
+        INFT _land,
+        INFT _estate,
+        int256 _x,
+        int256 _y
+    ) external view returns (bool) {
         uint256 landId = _land.encodeTokenId(_x, _y);
-        address owner = _land.ownerOf(landId);
+        address landOwner = _land.ownerOf(landId);
 
-        if(owner == _sender) {
+        if (landOwner == _sender) {
             return true;
         }
 
-        if(owner == address(_estate)) {
+        if (_land.getApproved(landId) == _sender) {
+            return true;
+        }
+
+        if (_land.updateOperator(landId) == _sender) {
+            return true;
+        }
+
+        if (_land.isApprovedForAll(landOwner, _sender)) {
+            return true;
+        }
+
+        if (_land.updateManager(landOwner, _sender)) {
+            return true;
+        }
+
+        if (landOwner == address(_estate)) {
             uint256 estateId = _estate.getLandEstateId(landId);
+            address estateOwner = _estate.ownerOf(estateId);
 
-            if(_estate.ownerOf(estateId) == _sender) {
+            if (estateOwner == _sender) {
                 return true;
             }
 
-            if(_estate.getApproved(estateId) == _sender) {
+            if (_estate.getApproved(estateId) == _sender) {
                 return true;
             }
 
-            if(_estate.isApprovedForAll(owner, _sender)){
+            if (_estate.updateOperator(estateId) == _sender) {
                 return true;
             }
 
-            if(_estate.updateManager(owner, _sender)){
+            if (_estate.isApprovedForAll(estateOwner, _sender)) {
                 return true;
             }
 
-            if(_estate.updateOperator(estateId) == _sender){
+            if (_estate.updateManager(estateOwner, _sender)) {
                 return true;
             }
-        }
-
-        if(_land.getApproved(landId) == _sender) {
-            return true;
-        }
-
-        if(_land.isApprovedForAll(owner, _sender)){
-            return true;
-        }
-
-        if(_land.updateManager(owner, _sender)){
-            return true;
-        }
-
-        if(_land.updateOperator(landId) == _sender){
-            return true;
         }
 
         return false;
     }
 
-    function multicall(bytes[] calldata data) external view returns (bool[] memory results) {
+    function multicall(
+        bytes[] calldata data
+    ) external view returns (bool[] memory results) {
         results = new bool[](data.length);
         for (uint256 i = 0; i < data.length; i++) {
-            bytes memory result = Address.functionStaticCall(address(this), data[i]);
+            bytes memory result = Address.functionStaticCall(
+                address(this),
+                data[i]
+            );
             bool decodedResult = abi.decode(result, (bool));
             results[i] = decodedResult;
         }

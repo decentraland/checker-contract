@@ -27,7 +27,7 @@ async function main() {
             params.y,
           ]),
         },
-        ethers.utils.hexlify(block),
+        ethers.utils.hexStripZeros(ethers.utils.hexlify(block)),
         {
           [checkerAddress]: {
             code: bytecode,

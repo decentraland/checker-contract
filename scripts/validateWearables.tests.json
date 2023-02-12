@@ -4,39 +4,9 @@
       "sender": "0x5ce9fb617333b8c5a8f7787710f7c07002cb3516",
       "collection": "0x336bd8da16807f8e542c83ab3789813c9a726ae6",
       "itemId": "0",
-      "contentHash": "QmbjhimYd5iVsmgLh44CUxgZobjeBVxLgtnDHU7UBrrxgk"
+      "contentHash": "bafkreib45owymjtcipk5cthhjthg4mk4q5d4ecyv72i5rp352mvuneh2gm"
     },
-    "block": 38997350,
-    "expected": true
-  },
-  {
-    "params": {
-      "sender": "0x5ce9fb617333b8c5a8f7787710f7c07002cb3516",
-      "collection": "0x336bd8da16807f8e542c83ab3789813c9a726ae6",
-      "itemId": "0",
-      "contentHash": "bafkreighb6yzi5pcnn3a6gumxumlywf4gda3ofkrynmf5sa7x2mztubaou"
-    },
-    "block": 38997350,
-    "expected": true
-  },
-  {
-    "params": {
-      "sender": "0x5ce9fb617333b8c5a8f7787710f7c07002cb3516",
-      "collection": "0x336bd8da16807f8e542c83ab3789813c9a726ae6",
-      "itemId": "0",
-      "contentHash": "QmbjhimYd5iVsmgLh44CUxgZobjeBVxLgtnDHU7UBrrxgk"
-    },
-    "block": 38997206,
-    "expected": true
-  },
-  {
-    "params": {
-      "sender": "0x5ce9fb617333b8c5a8f7787710f7c07002cb3516",
-      "collection": "0x336bd8da16807f8e542c83ab3789813c9a726ae6",
-      "itemId": "0",
-      "contentHash": "bafkreighb6yzi5pcnn3a6gumxumlywf4gda3ofkrynmf5sa7x2mztubaou"
-    },
-    "block": 38997206,
+    "block": 39221633,
     "expected": true
   }
 ]

@@ -46,6 +46,6 @@ You can run it with:
 $ npx hardhat run ./scripts/checkLAND.ts --network mainnet
 ```
 
-Test cases can be modified in the suites variable inside the script.
+Test cases can be added in the `checkLAND.tests.json` file.
 
 The `checkLAND.aux.ts` file can be used to test the different values used by the checkLAND function for improved debugging.

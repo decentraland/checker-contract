@@ -49,3 +49,17 @@ $ npx hardhat run ./scripts/checkLAND.ts --network mainnet
 Test cases can be added in the `checkLAND.tests.json` file.
 
 The `checkLAND.aux.ts` file can be used to test the different values used by the checkLAND function for improved debugging.
+
+## ValidateWearables
+
+The `validateWearables.ts` script runs a bunch of defined calls to the validateWearables function in the contract.
+
+You can run it with:
+
+```
+$ npx hardhat run ./scripts/validateWearables.ts --network matic
+```
+
+Test cases can be added in the `validateWearables.tests.json` file.
+
+The `validateWearables.aux.ts` file can be used to test the different values used by the validateWearables function for improved debugging.

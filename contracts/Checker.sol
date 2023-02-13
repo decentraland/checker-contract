@@ -11,10 +11,6 @@
 pragma solidity ^0.8.16;
 
 interface ICollection {
-    function isCollectionFromFactory(
-        address _collection
-    ) external view returns (bool);
-
     function items(
         uint256 _itemId
     )
@@ -37,6 +33,16 @@ interface ICollection {
     function itemManagers(
         uint256 _itemId,
         address _user
+    ) external view returns (bool);
+
+    function isApproved() external view returns (bool);
+
+    function isCompleted() external view returns (bool);
+}
+
+interface ICollectionFactory {
+    function isCollectionFromFactory(
+        address _collection
     ) external view returns (bool);
 }
 
@@ -409,69 +415,73 @@ library Address {
 }
 
 contract Checker {
+    /// @notice Check that an address has access to a certain wearable or emote.
+    /// @param _sender The address for which access will be checked.
+    /// @param _factories An array of collection factories used to validate that _collection was created by one of them.
+    /// @param _collection The address of the collection containing the item.
+    /// @param _itemId The id if the item.
+    /// @param _contentHash The content hash of the item.
+    /// @param _committees Array of committee contracts.
     function validateWearables(
         address _sender,
-        ICollection[] calldata _factories,
+        ICollectionFactory[] calldata _factories,
         ICollection _collection,
         uint256 _itemId,
-        string calldata _contentHash,
+        string memory _contentHash,
         ICommittee[] calldata _committees
     ) external view returns (bool) {
-        bool hasAccess = false;
-        uint256 i = 0;
+        // Check that the collection was created by one of the provided factories.
+        // Skip this check if no factories are provided. Skipping is required for L1 collections as they were not created with a factory.
+        if (_factories.length > 0) {
+            bool isCollectionFromFactory;
 
-        while (!hasAccess && i < _factories.length) {
-            ICollection factory = _factories[i];
-            i++;
+            for (uint256 i; i < _factories.length; i++) {
+                ICollectionFactory factory = _factories[i];
 
-            hasAccess = _validateWearables(
-                factory,
-                _collection,
-                _sender,
-                _itemId,
-                _contentHash,
-                _committees
-            );
-        }
+                isCollectionFromFactory = factory.isCollectionFromFactory(
+                    address(_collection)
+                );
 
-        return hasAccess;
-    }
-
-    function _validateWearables(
-        ICollection _factory,
-        ICollection _collection,
-        address _sender,
-        uint256 _itemId,
-        string calldata _contentHash,
-        ICommittee[] calldata _committees
-    ) private view returns (bool) {
-        if (!_factory.isCollectionFromFactory(address(_collection))) {
-            return false;
-        }
-
-        address creator = _collection.creator();
-
-        bool isCommitteeMember;
-
-        for (uint256 i; i < _committees.length; i++) {
-            if (_committees[i].members(_sender)) {
-                isCommitteeMember = true;
-                break;
+                if (isCollectionFromFactory) {
+                    break;
+                }
             }
-        }
 
-        if (
-            creator != _sender &&
-            !_collection.globalManagers(_sender) &&
-            !_collection.itemManagers(_itemId, _sender) &&
-            !isCommitteeMember
-        ) {
-            return false;
+            if (!isCollectionFromFactory) {
+                return false;
+            }
         }
 
         (, , , , , , string memory contentHash) = _collection.items(_itemId);
 
-        return keccak256(bytes(_contentHash)) == keccak256(bytes(contentHash));
+        if (bytes(contentHash).length != 0) {
+            // Only a _sender that belongs to the committee can have access to an item that has a defined content hash.
+            bool isCommitteeMember;
+
+            for (uint256 i; i < _committees.length; i++) {
+                ICommittee committee = _committees[i];
+
+                isCommitteeMember = committee.members(_sender);
+
+                if (isCommitteeMember) {
+                    break;
+                }
+            }
+
+            bool isHashOk = keccak256(bytes(contentHash)) ==
+                keccak256(bytes(_contentHash));
+
+            return isCommitteeMember && isHashOk;
+        }
+
+        bool isCollectionValid = !_collection.isApproved() &&
+            _collection.isCompleted();
+
+        bool hasAccess = _sender == _collection.creator() ||
+            _collection.globalManagers(_sender) ||
+            _collection.itemManagers(_itemId, _sender);
+
+        return isCollectionValid && hasAccess;
     }
 
     function validateThirdParty(

@@ -128,7 +128,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract ICollection[]",
+        "internalType": "contract ICollectionFactory[]",
         "name": "_factories",
         "type": "address[]"
       },

@@ -18,7 +18,7 @@ async function main() {
 
   const thirdParty = await tpr.thirdParties(test.params.tpId, options);
   console.log("thirdParty.isApproved", thirdParty.isApproved);
-  console.log("thirdParty.root === test.params.root", thirdParty.root === test.params.root);
+  console.log("thirdParty.root === test.params.root", thirdParty.root === ethers.utils.hexlify(test.params.root));
 }
 
 // We recommend this pattern to be able to use async/await everywhere

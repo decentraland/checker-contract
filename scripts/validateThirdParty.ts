@@ -22,7 +22,7 @@ async function main() {
             params.sender,
             contracts.registry,
             params.tpId,
-            new Uint8Array(params.root),
+            params.root,
           ]),
         },
         ethers.utils.hexStripZeros(ethers.utils.hexlify(block)),
@@ -33,17 +33,11 @@ async function main() {
         },
       ]);
 
-      const hasAccess = checkerInterface.decodeFunctionResult(
-        "validateThirdParty",
-        hex
-      )[0];
+      const hasAccess = checkerInterface.decodeFunctionResult("validateThirdParty", hex)[0];
 
-      hasAccess === expected
-        ? console.log("SUCCESS")
-        : console.error("FAILURE");
+      hasAccess === expected ? console.log("SUCCESS") : console.error("FAILURE");
     } catch (e) {
-      console.error("FAILURE: error", (e as Error).message);
-      console.error("FAILURE: ", (e as Error).message);
+      console.error("FAILURE:", (e as Error).message);
     }
   }
 }

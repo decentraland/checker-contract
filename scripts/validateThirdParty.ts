@@ -19,7 +19,6 @@ async function main() {
         {
           to: checkerAddress,
           data: checkerInterface.encodeFunctionData("validateThirdParty", [
-            params.sender,
             contracts.registry,
             params.tpId,
             params.root,

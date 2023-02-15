@@ -13,9 +13,6 @@ async function main() {
 
   const options = { blockTag: test.block };
 
-  const isThirdPartyManager = await tpr.isThirdPartyManager(test.params.tpId, test.params.sender, options);
-  console.log("isThirdPartyManager", isThirdPartyManager);
-
   const thirdParty = await tpr.thirdParties(test.params.tpId, options);
   console.log("thirdParty.isApproved", thirdParty.isApproved);
   console.log("thirdParty.root === test.params.root", thirdParty.root === ethers.utils.hexlify(test.params.root));

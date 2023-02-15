@@ -89,11 +89,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_sender",
-        "type": "address"
-      },
-      {
         "internalType": "contract ITPRegistry",
         "name": "_tpRegistry",
         "type": "address"

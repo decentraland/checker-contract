@@ -47,11 +47,6 @@ interface ICollectionFactory {
 }
 
 interface ITPRegistry {
-    function isThirdPartyManager(
-        string memory _thirdPartyId,
-        address _manager
-    ) external view returns (bool);
-
     function thirdParties(
         string memory _tpID
     )
@@ -484,16 +479,15 @@ contract Checker {
         return isCollectionValid && hasAccess;
     }
 
+    /// @notice Check that merkle root matches the merkle root of a third party.
+    /// @param _tpRegistry Address of the third party registry contract.
+    /// @param _tpId The id of the third party.
+    /// @param _root The merkle root to validate.
     function validateThirdParty(
-        address _sender,
         ITPRegistry _tpRegistry,
         string memory _tpId,
         bytes32 _root
     ) external view returns (bool) {
-        if (!_tpRegistry.isThirdPartyManager(_tpId, _sender)) {
-            return false;
-        }
-
         (bool isApproved, bytes32 root, , , , , ) = _tpRegistry.thirdParties(
             _tpId
         );

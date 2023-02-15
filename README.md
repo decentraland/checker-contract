@@ -63,3 +63,17 @@ $ npx hardhat run ./scripts/validateWearables.ts --network matic
 Test cases can be added in the `validateWearables.tests.json` file.
 
 The `validateWearables.aux.ts` file can be used to test the different values used by the validateWearables function for improved debugging.
+
+## ValidateThirdParty
+
+The `validateThirdParty.ts` script runs a bunch of defined calls to the validateThirdParty function in the contract.
+
+You can run it with:
+
+```
+$ npx hardhat run ./scripts/validateThirdParty.ts --network matic
+```
+
+Test cases can be added in the `validateThirdParty.tests.json` file.
+
+The `validateThirdParty.aux.ts` file can be used to test the different values used by the validateThirdParty function for improved debugging.

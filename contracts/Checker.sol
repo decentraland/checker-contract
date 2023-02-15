@@ -479,7 +479,7 @@ contract Checker {
         return isCollectionValid && hasAccess;
     }
 
-    /// @notice Check that merkle root matches the merkle root of third party.
+    /// @notice Check that merkle root matches the merkle root of a third party.
     /// @param _tpRegistry Address of the third party registry contract.
     /// @param _tpId The id of the third party.
     /// @param _root The merkle root to validate.

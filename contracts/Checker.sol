@@ -98,6 +98,10 @@ contract Checker is Multicall {
         return isApproved && root == _root;
     }
 
+    /// @notice Check that an address is the owner of a name.
+    /// @param _sender The address for which access will be checked.
+    /// @param _registrar The address of the DCL registrar.
+    /// @param _name The name to check.
     function checkName(
         address _sender,
         IDCLRegistrar _registrar,
@@ -106,6 +110,12 @@ contract Checker is Multicall {
         return _sender == _registrar.getOwnerOf(_name);
     }
 
+    /// @notice Check that an address has access to a LAND.
+    /// @param _sender The address for which access will be checked.
+    /// @param _land The LAND contract.
+    /// @param _estate The Estate contract.
+    /// @param _x X coordinate of the land.
+    /// @param _y Y coordinate of the land.
     function checkLAND(
         address _sender,
         ILAND _land,

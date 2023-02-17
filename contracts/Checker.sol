@@ -10,7 +10,9 @@ import "./interfaces/IEstate.sol";
 import "./interfaces/ICommittee.sol";
 import "./interfaces/IDCLRegistrar.sol";
 
-contract Checker {
+import "./utils/Multicall.sol";
+
+contract Checker is Multicall {
     /// @notice Check that an address has access to a certain wearable or emote.
     /// @param _sender The address for which access will be checked.
     /// @param _factories An array of collection factories used to validate that _collection was created by one of them.
@@ -160,25 +162,5 @@ contract Checker {
         }
 
         return false;
-    }
-
-    function multicall(
-        bytes[] calldata data
-    ) external view returns (bool[] memory results) {
-        results = new bool[](data.length);
-
-        for (uint256 i = 0; i < data.length; i++) {
-            (bool success, bytes memory result) = address(this).staticcall(
-                data[i]
-            );
-
-            require(success, "Checker#multicall: STATICCALL_FAILED");
-
-            bool decodedResult = abi.decode(result, (bool));
-
-            results[i] = decodedResult;
-        }
-
-        return results;
     }
 }

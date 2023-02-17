@@ -63,13 +63,17 @@ interface ITPRegistry {
         );
 }
 
-interface INFT {
+interface ILAND {
+    function encodeTokenId(int x, int y) external view returns (uint256);
+
+    function ownerOf(uint256 _nft) external view returns (address);
+
+    function getApproved(uint256 _nft) external view returns (address);
+
     function isApprovedForAll(
         address _user,
         address _operator
     ) external view returns (bool);
-
-    function getApproved(uint256 _nft) external view returns (address);
 
     function updateOperator(uint256 _nft) external view returns (address);
 
@@ -77,12 +81,26 @@ interface INFT {
         address _user,
         address _operator
     ) external view returns (bool);
+}
+
+interface IEstate {
+    function getLandEstateId(uint256 nft) external view returns (uint256);
 
     function ownerOf(uint256 _nft) external view returns (address);
 
-    function encodeTokenId(int x, int y) external view returns (uint256);
+    function getApproved(uint256 _nft) external view returns (address);
 
-    function getLandEstateId(uint256 nft) external view returns (uint256);
+    function isApprovedForAll(
+        address _user,
+        address _operator
+    ) external view returns (bool);
+
+    function updateOperator(uint256 _nft) external view returns (address);
+
+    function updateManager(
+        address _user,
+        address _operator
+    ) external view returns (bool);
 }
 
 interface ICommittee {
@@ -505,8 +523,8 @@ contract Checker {
 
     function checkLAND(
         address _sender,
-        INFT _land,
-        INFT _estate,
+        ILAND _land,
+        IEstate _estate,
         int256 _x,
         int256 _y
     ) external view returns (bool) {

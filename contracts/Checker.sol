@@ -10,113 +10,13 @@
 
 pragma solidity ^0.8.16;
 
-interface ICollection {
-    function items(
-        uint256 _itemId
-    )
-        external
-        view
-        returns (
-            string memory,
-            uint256,
-            uint256,
-            uint256,
-            address,
-            string memory,
-            string memory
-        );
-
-    function creator() external view returns (address);
-
-    function globalManagers(address _user) external view returns (bool);
-
-    function itemManagers(
-        uint256 _itemId,
-        address _user
-    ) external view returns (bool);
-
-    function isApproved() external view returns (bool);
-
-    function isCompleted() external view returns (bool);
-}
-
-interface ICollectionFactory {
-    function isCollectionFromFactory(
-        address _collection
-    ) external view returns (bool);
-}
-
-interface ITPRegistry {
-    function thirdParties(
-        string memory _tpID
-    )
-        external
-        view
-        returns (
-            bool,
-            bytes32,
-            uint256,
-            uint256,
-            uint256,
-            string memory,
-            string memory
-        );
-}
-
-interface ILAND {
-    function encodeTokenId(int x, int y) external view returns (uint256);
-
-    function ownerOf(uint256 _nft) external view returns (address);
-
-    function getApproved(uint256 _nft) external view returns (address);
-
-    function isApprovedForAll(
-        address _user,
-        address _operator
-    ) external view returns (bool);
-
-    function updateOperator(uint256 _nft) external view returns (address);
-
-    function updateManager(
-        address _user,
-        address _operator
-    ) external view returns (bool);
-}
-
-interface IEstate {
-    function getLandEstateId(uint256 nft) external view returns (uint256);
-
-    function ownerOf(uint256 _nft) external view returns (address);
-
-    function getApproved(uint256 _nft) external view returns (address);
-
-    function isApprovedForAll(
-        address _user,
-        address _operator
-    ) external view returns (bool);
-
-    function updateOperator(uint256 _nft) external view returns (address);
-
-    function updateManager(
-        address _user,
-        address _operator
-    ) external view returns (bool);
-}
-
-interface ICommittee {
-    function members(address _user) external view returns (bool);
-}
-
-interface IDCLRegistrar {
-    /**
-     * @dev Get the owner of a subdomain
-     * @param _subdomain - string of the subdomain
-     * @return owner of the subdomain
-     */
-    function getOwnerOf(
-        string memory _subdomain
-    ) external view returns (address);
-}
+import "./interfaces/ICollection.sol";
+import "./interfaces/ICollectionFactory.sol";
+import "./interfaces/IThirdPartyRegistry.sol";
+import "./interfaces/ILAND.sol";
+import "./interfaces/IEstate.sol";
+import "./interfaces/ICommittee.sol";
+import "./interfaces/IDCLRegistrar.sol";
 
 // OpenZeppelin Contracts (last updated v4.8.0) (utils/Address.sol)
 
@@ -502,7 +402,7 @@ contract Checker {
     /// @param _tpId The id of the third party.
     /// @param _root The merkle root to validate.
     function validateThirdParty(
-        ITPRegistry _tpRegistry,
+        IThirdPartyRegistry _tpRegistry,
         string memory _tpId,
         bytes32 _root
     ) external view returns (bool) {

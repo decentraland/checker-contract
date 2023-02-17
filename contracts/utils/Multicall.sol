@@ -3,6 +3,8 @@
 pragma solidity 0.8.16;
 
 abstract contract Multicall {
+    /// @notice Allows calling the contract multiple times in a single eth_call.
+    /// @param data An array containing the encoded data for each call.
     function multicall(
         bytes[] calldata data
     ) external view returns (bool[] memory results) {

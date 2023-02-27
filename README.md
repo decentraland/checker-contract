@@ -1,6 +1,6 @@
 # Checker Contract
 
-Replaces content validation from depending on subgraphs to using the blockchain directly.
+Can be used to replace content validation using the blockchain directly instead of relying on subgraphs.
 
 ## Development
 

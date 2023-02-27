@@ -1,32 +1,13 @@
 import hre, { ethers } from "hardhat";
 import { Checker__factory } from "../typechain-types";
 import { bytecode } from "./bytecode.json";
-import tests from "./validateWearables.tests.json";
+import tests from "./checkName.tests.json";
 
 const checkerAddress = ethers.Wallet.createRandom().address;
 const checkerInterface = Checker__factory.createInterface();
 
 const contracts = {
-  factories: [
-    {
-      address: "0xB549B2442b2BD0a53795BC5cDcBFE0cAF7ACA9f8",
-      sinceBlock: 15202563,
-    },
-    {
-      address: "0x3195e88aE10704b359764CB38e429D24f1c2f781",
-      sinceBlock: 28121692,
-    },
-  ],
-  commitees: [
-    {
-      address: "0x71d9350Ef44E1e451F00e447C0DfF2d1FB75510a",
-      sinceBlock: 15202559,
-    },
-    {
-      address: "0xaeec95a8aa671a6d3fec56594827d7804964fa70",
-      sinceBlock: 19585299,
-    },
-  ],
+  registrar: "0x2a187453064356c898cae034eaed119e1663acb8",
 };
 
 async function main() {
@@ -34,23 +15,13 @@ async function main() {
     try {
       const { params, block, expected } = tests[i];
 
-      const factories = contracts.factories
-        .filter(({ sinceBlock }) => block >= sinceBlock)
-        .map(({ address }) => address);
-      const commitees = contracts.commitees
-        .filter(({ sinceBlock }) => block >= sinceBlock)
-        .map(({ address }) => address);
-
       const hex = await hre.network.provider.send("eth_call", [
         {
           to: checkerAddress,
-          data: checkerInterface.encodeFunctionData("validateWearables", [
+          data: checkerInterface.encodeFunctionData("checkName", [
             params.sender,
-            factories,
-            params.collection,
-            params.itemId,
-            params.contentHash,
-            commitees,
+            contracts.registrar,
+            params.name,
           ]),
         },
         ethers.utils.hexStripZeros(ethers.utils.hexlify(block)),
@@ -62,7 +33,7 @@ async function main() {
       ]);
 
       const hasAccess = checkerInterface.decodeFunctionResult(
-        "validateWearables",
+        "checkLAND",
         hex
       )[0];
 
@@ -70,7 +41,6 @@ async function main() {
         ? console.log("SUCCESS")
         : console.error("FAILURE");
     } catch (e) {
-      console.error("FAILURE: error", (e as Error).message);
       console.error("FAILURE: ", (e as Error).message);
     }
   }

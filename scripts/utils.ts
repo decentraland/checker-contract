@@ -2,7 +2,7 @@ export function getContractsForNetwork(network: string) {
   switch (network) {
     case "mainnet":
       return {
-        LAND: "0xF87e31492Faf9A91B02ee0dEAAd50d51d56D5d4d",
+        LAND: "0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d",
         ESTATE: "0x959e104e1a4db6317fa58f8295f586e1a978c297",
       };
     case "goerli":

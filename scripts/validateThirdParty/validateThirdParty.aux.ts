@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 import TPRAbi from "../../abis/TPR.json";
-import tests from "./validateThirdParty.tests.json";
+import { tests } from "./validateThirdParty.tests";
 
 const contracts = {
   tpr: "0x1C436C1EFb4608dFfDC8bace99d2B03c314f3348",

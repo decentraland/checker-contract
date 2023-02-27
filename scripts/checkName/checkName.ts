@@ -1,7 +1,7 @@
 import hre, { ethers } from "hardhat";
 import { Checker__factory } from "../../typechain-types";
 import { bytecode } from "../bytecode.json";
-import tests from "./checkName.tests.json";
+import { tests } from "./checkName.tests";
 
 const checkerAddress = ethers.Wallet.createRandom().address;
 const checkerInterface = Checker__factory.createInterface();
@@ -18,11 +18,7 @@ async function main() {
       const hex = await hre.network.provider.send("eth_call", [
         {
           to: checkerAddress,
-          data: checkerInterface.encodeFunctionData("checkName", [
-            params.sender,
-            contracts.registrar,
-            params.name,
-          ]),
+          data: checkerInterface.encodeFunctionData("checkName", [params.sender, contracts.registrar, params.name]),
         },
         ethers.utils.hexStripZeros(ethers.utils.hexlify(block)),
         {
@@ -32,14 +28,9 @@ async function main() {
         },
       ]);
 
-      const hasAccess = checkerInterface.decodeFunctionResult(
-        "checkLAND",
-        hex
-      )[0];
+      const hasAccess = checkerInterface.decodeFunctionResult("checkLAND", hex)[0];
 
-      hasAccess === expected
-        ? console.log("SUCCESS")
-        : console.error("FAILURE");
+      hasAccess === expected ? console.log("SUCCESS") : console.error("FAILURE");
     } catch (e) {
       console.error("FAILURE: ", (e as Error).message);
     }

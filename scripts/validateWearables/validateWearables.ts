@@ -1,7 +1,7 @@
 import hre, { ethers } from "hardhat";
 import { Checker__factory } from "../../typechain-types";
 import { bytecode } from "../bytecode.json";
-import tests from "./validateWearables.tests.json";
+import { tests } from "./validateWearables.tests";
 
 const checkerAddress = ethers.Wallet.createRandom().address;
 const checkerInterface = Checker__factory.createInterface();

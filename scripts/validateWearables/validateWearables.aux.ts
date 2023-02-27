@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import CollectionFactoryAbi from "../../abis/CollectionFactory.json";
 import CommitteeAbi from "../../abis/Committee.json";
 import CollectionAbi from "../../abis/Collection.json";
-import tests from "./validateWearables.tests.json";
+import { tests } from "./validateWearables.tests";
 
 const contracts = {
   collectionFactoryV2: "0xb549b2442b2bd0a53795bc5cdcbfe0caf7aca9f8",

@@ -5,8 +5,6 @@ import { getContractsForNetwork } from "../utils";
 import { getTestsForNetwork } from "./checkLAND.tests";
 
 async function main() {
-  // Setup
-
   const { LAND, ESTATE } = getContractsForNetwork(hre.network.name);
   const test = getTestsForNetwork(hre.network.name)[0];
 
@@ -16,8 +14,6 @@ async function main() {
   const options = { blockTag: test.block };
 
   const { sender, x, y } = test.params;
-
-  // Calls
 
   const landId = await land.encodeTokenId(x, y, options);
   console.log("landId", landId.toString());

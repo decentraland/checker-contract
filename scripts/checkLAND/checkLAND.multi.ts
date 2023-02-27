@@ -18,8 +18,8 @@ async function main() {
         tests.map((test) =>
           checkerInterface.encodeFunctionData("checkLAND", [
             test.params.sender,
-            LAND,
-            ESTATE,
+            LAND!,
+            ESTATE!,
             test.params.x,
             test.params.y,
           ])

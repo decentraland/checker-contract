@@ -1,16 +1,16 @@
 import hre, { ethers } from "hardhat";
 import { Checker__factory } from "../../typechain-types";
 import { bytecode } from "../bytecode.json";
-import { tests } from "./validateThirdParty.tests";
+import { getContractsForNetwork } from "../utils";
+import { getTestsForNetwork } from "./validateThirdParty.tests";
 
 const checkerAddress = ethers.Wallet.createRandom().address;
 const checkerInterface = Checker__factory.createInterface();
 
-const contracts = {
-  registry: "0x1C436C1EFb4608dFfDC8bace99d2B03c314f3348",
-};
-
 async function main() {
+  const { TPR } = getContractsForNetwork(hre.network.name);
+  const tests = getTestsForNetwork(hre.network.name);
+
   for (let i = 0; i < tests.length; i++) {
     try {
       const { params, block, expected } = tests[i];
@@ -18,11 +18,7 @@ async function main() {
       const hex = await hre.network.provider.send("eth_call", [
         {
           to: checkerAddress,
-          data: checkerInterface.encodeFunctionData("validateThirdParty", [
-            contracts.registry,
-            params.tpId,
-            params.root,
-          ]),
+          data: checkerInterface.encodeFunctionData("validateThirdParty", [TPR!, params.tpId, params.root]),
         },
         ethers.utils.hexStripZeros(ethers.utils.hexlify(block)),
         {

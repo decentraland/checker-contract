@@ -12,6 +12,14 @@ export function getContractsForNetwork(network: string) {
         ESTATE: "0xC9A46712E6913c24d15b46fF12221a79c4e251DC",
         REGISTRAR: "0x6b8da2752827cf926215b43bb8e46fd7b9ddac35",
       };
+    case "matic":
+      return {
+        TPR: "0x1c436c1efb4608dffdc8bace99d2b03c314f3348",
+      };
+    case "mumbai":
+      return {
+        TPR: "0xedf516f2d42a47f9ce0b145fe0dbb76975379889",
+      };
     default:
       throw new Error(`Network ${network} not supported`);
   }

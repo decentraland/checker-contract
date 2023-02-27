@@ -18,7 +18,7 @@ async function main() {
       const hex = await hre.network.provider.send("eth_call", [
         {
           to: checkerAddress,
-          data: checkerInterface.encodeFunctionData("checkLAND", [params.sender, LAND, ESTATE, params.x, params.y]),
+          data: checkerInterface.encodeFunctionData("checkLAND", [params.sender, LAND!, ESTATE!, params.x, params.y]),
         },
         ethers.utils.hexStripZeros(ethers.utils.hexlify(block)),
         {

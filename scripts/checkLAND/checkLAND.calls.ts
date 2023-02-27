@@ -10,8 +10,8 @@ async function main() {
   const { LAND, ESTATE } = getContractsForNetwork(hre.network.name);
   const test = getTestsForNetwork(hre.network.name)[0];
 
-  const land = new ethers.Contract(LAND, LANDAbi, ethers.provider);
-  const estate = new ethers.Contract(ESTATE, EstateAbi, ethers.provider);
+  const land = new ethers.Contract(LAND!, LANDAbi, ethers.provider);
+  const estate = new ethers.Contract(ESTATE!, EstateAbi, ethers.provider);
 
   const options = { blockTag: test.block };
 

@@ -1,15 +1,13 @@
-import { ethers } from "hardhat";
-import TPRAbi from "../abis/TPR.json";
-import tests from "./validateThirdParty.tests.json";
-
-const contracts = {
-  tpr: "0x1C436C1EFb4608dFfDC8bace99d2B03c314f3348",
-};
+import hre, { ethers } from "hardhat";
+import TPRAbi from "../../abis/TPR.json";
+import { getContractsForNetwork } from "../utils";
+import { getTestsForNetwork } from "./validateThirdParty.tests";
 
 async function main() {
-  const test = tests[0];
+  const { TPR } = getContractsForNetwork(hre.network.name);
+  const test = getTestsForNetwork(hre.network.name)[0];
 
-  const tpr = new ethers.Contract(contracts.tpr, TPRAbi, ethers.provider);
+  const tpr = new ethers.Contract(TPR!, TPRAbi, ethers.provider);
 
   const options = { blockTag: test.block };
 

@@ -1,5 +1,7 @@
 # Checker Contract
 
+Can be used to replace content validation using the blockchain directly instead of relying on subgraphs.
+
 ## Development
 
 Install dependencies with:
@@ -28,7 +30,10 @@ This is just a helper to have the Checker ABI more accessible, It can also be fo
 
 There is a `bytecode.json` file inside the scripts folder, it has to be regenerated every time the contract changes in order to be able to run:
 
-- `checkLAND.ts`
+- `./scripts/checkLAND/checkLAND.ts`
+- `./scripts/checkName/checkName.ts`
+- `./scripts/validateThirdParty/validateThirdParty.ts`
+- `./scripts/validateWearables/validateWearables.ts`
 
 To regenerate it, simply run:
 
@@ -36,44 +41,32 @@ To regenerate it, simply run:
 $ npx hardhat run ./scripts/bytecode.ts
 ```
 
-## CheckLAND
+## Scripts
 
-The `checkLAND.ts` script runs a bunch of defined calls to the checkLAND function in the contract.
+Inside the `./scripts` directory, there are four different subdirectories containing scripts to execute calls to the `Checker` contract functions with various parameters to check the results.
 
-You can run it with:
+If you dive into the different function directories, you'll find a main script called the same as the directory containing it.
 
-```
-$ npx hardhat run ./scripts/checkLAND.ts --network mainnet
-```
-
-Test cases can be added in the `checkLAND.tests.json` file.
-
-The `checkLAND.aux.ts` file can be used to test the different values used by the checkLAND function for improved debugging.
-
-## ValidateWearables
-
-The `validateWearables.ts` script runs a bunch of defined calls to the validateWearables function in the contract.
-
-You can run it with:
+You can run those by executing, in the case of `checkLAND`:
 
 ```
-$ npx hardhat run ./scripts/validateWearables.ts --network matic
+$ npx hardhat run ./scripts/checkLAND/checkLAND.ts --network mainnet
 ```
 
-Test cases can be added in the `validateWearables.tests.json` file.
+This will run all tests inside the file in the same directory that has a `.test.ts` suffix.
 
-The `validateWearables.aux.ts` file can be used to test the different values used by the validateWearables function for improved debugging.
+The `--network` flag determines the suite of tests for a given network that have to be run.
 
-## ValidateThirdParty
+A file with `.calls.ts` suffix might be found as well, these serve as a way to check individually the different calls the Checker makes to the provided contracts. For example, `checkLAND` function will make various calls to the LAND and Estate contracts to check the permissions of the provided `sender`.
 
-The `validateThirdParty.ts` script runs a bunch of defined calls to the validateThirdParty function in the contract.
-
-You can run it with:
+This file is called with:
 
 ```
-$ npx hardhat run ./scripts/validateThirdParty.ts --network matic
+$ npx hardhat run ./scripts/checkLAND/checkLAND.calls.ts --network mainnet
 ```
 
-Test cases can be added in the `validateThirdParty.tests.json` file.
+A file that ends with `.multi.ts` will call the contract's `multicall` function used to do multiple calls to functions inside the Checker. That function is just a utility to avoid making unnecessary rpc calls when only 1 might suffice.
 
-The `validateThirdParty.aux.ts` file can be used to test the different values used by the validateThirdParty function for improved debugging.
+```
+$ npx hardhat run ./scripts/checkLAND/checkLAND.multi.ts --network mainnet
+```

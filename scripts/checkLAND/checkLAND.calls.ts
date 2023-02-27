@@ -1,22 +1,27 @@
-import { ethers } from "hardhat";
+import hre, { ethers } from "hardhat";
 import LANDAbi from "../../abis/LAND.json";
 import EstateAbi from "../../abis/Estate.json";
+import { getContractsForNetwork } from "../utils";
+import { getTestsForNetwork } from "./checkLAND.tests";
 
 async function main() {
-  const landAddress = "0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d";
-  const estateAddress = "0x959e104e1a4db6317fa58f8295f586e1a978c297";
-  const land = new ethers.Contract(landAddress, LANDAbi, ethers.provider);
-  const estate = new ethers.Contract(estateAddress, EstateAbi, ethers.provider);
-  const block = 16578039;
-  const options = { blockTag: block };
+  // Setup
 
-  const sender = "0xa31f1f0d6bbd919bb3adab8da5835ed13e21f32a";
-  const x = -17;
-  const y = -37;
+  const { LAND, ESTATE } = getContractsForNetwork(hre.network.name);
+  const test = getTestsForNetwork(hre.network.name)[0];
+
+  const land = new ethers.Contract(LAND, LANDAbi, ethers.provider);
+  const estate = new ethers.Contract(ESTATE, EstateAbi, ethers.provider);
+
+  const options = { blockTag: test.block };
+
+  const { sender, x, y } = test.params;
+
+  // Calls
 
   const landId = await land.encodeTokenId(x, y, options);
   console.log("landId", landId.toString());
-  
+
   const landOwner = await land.ownerOf(landId, options);
   console.log("landOwner", landOwner);
   console.log("sender == landOwner", sender == landOwner);

@@ -1,6 +1,6 @@
 import hre, { ethers } from "hardhat";
-import { Checker__factory } from "../typechain-types";
-import { bytecode } from "./bytecode.json";
+import { Checker__factory } from "../../typechain-types";
+import { bytecode } from "../bytecode.json";
 import tests from "./validateWearables.tests.json";
 
 const checkerAddress = ethers.Wallet.createRandom().address;
@@ -61,14 +61,9 @@ async function main() {
         },
       ]);
 
-      const hasAccess = checkerInterface.decodeFunctionResult(
-        "validateWearables",
-        hex
-      )[0];
+      const hasAccess = checkerInterface.decodeFunctionResult("validateWearables", hex)[0];
 
-      hasAccess === expected
-        ? console.log("SUCCESS")
-        : console.error("FAILURE");
+      hasAccess === expected ? console.log("SUCCESS") : console.error("FAILURE");
     } catch (e) {
       console.error("FAILURE: error", (e as Error).message);
       console.error("FAILURE: ", (e as Error).message);

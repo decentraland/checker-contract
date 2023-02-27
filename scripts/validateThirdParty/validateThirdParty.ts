@@ -1,6 +1,6 @@
 import hre, { ethers } from "hardhat";
-import { Checker__factory } from "../typechain-types";
-import { bytecode } from "./bytecode.json";
+import { Checker__factory } from "../../typechain-types";
+import { bytecode } from "../bytecode.json";
 import tests from "./validateThirdParty.tests.json";
 
 const checkerAddress = ethers.Wallet.createRandom().address;

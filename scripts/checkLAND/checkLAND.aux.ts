@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
-import LANDAbi from "../abis/LAND.json";
-import EstateAbi from "../abis/Estate.json";
+import LANDAbi from "../../abis/LAND.json";
+import EstateAbi from "../../abis/Estate.json";
 
 async function main() {
   const landAddress = "0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d";

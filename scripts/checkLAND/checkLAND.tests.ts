@@ -4,6 +4,15 @@ export function getTestsForNetwork(network: string) {
       return [
         {
           params: {
+            sender: "0x46d74130a3e15bb776b344d0f58752a388386679",
+            x: -109,
+            y: -8,
+          },
+          block: 16127223,
+          expected: true,
+        },
+        {
+          params: {
             sender: "0xE37129c296F3348ADDf6061E4dFB4e4f2385a86f",
             x: -88,
             y: 12,

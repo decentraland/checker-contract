@@ -22,6 +22,9 @@ const config: HardhatUserConfig = {
     matic: {
       url: "https://rpc.decentraland.org/polygon",
     },
+    mumbai: {
+      url: "https://rpc.decentraland.org/mumbai",
+    },
   },
 };
 
